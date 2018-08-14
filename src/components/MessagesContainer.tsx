@@ -54,6 +54,7 @@ class MessagesContainer extends React.Component<IProps> {
           author={msg.author}
           content={msg.content}
           self={msg.author === this.props.userStore!.userName}
+          createdAt={msg.createdAt}
         />
       );
     });

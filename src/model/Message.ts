@@ -2,6 +2,7 @@ export interface IMessage {
   id: string;
   author: string;
   content: string;
-  hashTags?: string[];
+  hashtags?: string[];
   admin: boolean;
+  createdAt: Date;
 }

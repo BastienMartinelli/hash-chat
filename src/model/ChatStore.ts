@@ -20,7 +20,9 @@ export class ChatStore {
   get visibleMessages(): IMessage[] {
     return this.messages.filter(
       (msg: IMessage) =>
-        msg.hashTags && arrayEquals(msg.hashTags, hashtagStore.hashtags)
+        (msg.hashtags && arrayEquals(msg.hashtags, hashtagStore.hashtags)) ||
+        // no hashtags = #general
+        !msg.hashtags
     );
   }
 
@@ -30,7 +32,8 @@ export class ChatStore {
       admin: false,
       author: userStore.userName,
       content: msg,
-      hashTags: hashtagStore.hashtags,
+      createdAt: new Date(),
+      hashtags: hashtagStore.hashtags,
       id: ""
     };
 
@@ -67,7 +70,8 @@ export class ChatStore {
       admin: true,
       author: "Hash-Chat",
       content: `Now on ${hashtagStore.hashtags.join(" ") || "#general"}`,
-      hashTags: hashtagStore.hashtags,
+      createdAt: new Date(),
+      hashtags: hashtagStore.hashtags,
       id: Math.random().toString()
     });
   }
