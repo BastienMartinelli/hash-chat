@@ -28,7 +28,9 @@ class Navbar extends React.Component<IProps, IState> {
         aria-label="main navigation"
       >
         <div className="navbar-brand">
-          <a className="navbar-item">Hash-Chat</a>
+          <a className="navbar-item">
+            <strong>#Hash-Chat</strong>
+          </a>
         </div>
         <div className="navbar-end">
           <div className="navbar-item">

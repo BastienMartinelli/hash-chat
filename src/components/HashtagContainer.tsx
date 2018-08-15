@@ -2,6 +2,7 @@ import * as React from "react";
 import { observer, inject } from "../../node_modules/mobx-react";
 import { HashtagStore } from "../model/HashtagStore";
 import { Hashtag } from "./Hashtag";
+import HashtagShare from "./HashtagShare";
 
 interface IProps {
   hashtagStore?: HashtagStore;
@@ -28,7 +29,7 @@ class HashtagContainer extends React.Component<IProps, IState> {
           <input
             className="input is-rounded"
             type="text"
-            placeholder="#NewSubject"
+            placeholder="Add an hashtag. e.g. #NewSubject"
             value={this.state.input}
             onChange={this.onChange}
             disabled={this.isDisabled()}
@@ -42,6 +43,17 @@ class HashtagContainer extends React.Component<IProps, IState> {
               key={Math.random()}
             />
           ))}
+          {!!this.props.hashtagStore!.hashtags.length && (
+            <span>
+              <a
+                className="tag is-primary is-medium is-rounded hashtag"
+                onClick={this.props.hashtagStore!.clearHashtags}
+              >
+                Clear all tags
+              </a>
+            </span>
+          )}
+          <HashtagShare hashtags={this.props.hashtagStore!.hashtags} />
         </div>
       </div>
     );
