@@ -4,7 +4,6 @@ import { ChatStore } from "../model/ChatStore";
 import { UserStore } from "../model/UserStore";
 import { IMessage } from "../model/Message";
 import Message from "./Message";
-import MessageInput from "./MessageInput";
 
 const HOUR_IN_MILLI: number = 3_600_000;
 const VISIBLE_TIME: number = 12;
@@ -39,7 +38,6 @@ class MessagesContainer extends React.Component<IProps> {
             }}
           />
         </div>
-        <MessageInput />
       </React.Fragment>
     );
   }

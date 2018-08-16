@@ -24,7 +24,7 @@ class HashtagContainer extends React.Component<IProps, IState> {
 
   public render() {
     return (
-      <div className="hashtag-container">
+      <div className="hashtag-container shadow">
         <form onSubmit={this.addHashtag}>
           <input
             className="input is-rounded"
@@ -35,7 +35,7 @@ class HashtagContainer extends React.Component<IProps, IState> {
             disabled={this.isDisabled()}
           />
         </form>
-        <div>
+        <div className="tag-container">
           {this.props.hashtagStore!.hashtags.map((tag: string) => (
             <Hashtag
               hashtag={tag}
@@ -49,7 +49,10 @@ class HashtagContainer extends React.Component<IProps, IState> {
                 className="tag is-primary is-medium is-rounded hashtag"
                 onClick={this.props.hashtagStore!.clearHashtags}
               >
-                Clear all tags
+                <span className="icon">
+                  <i className="fas fa-eraser" />
+                </span>
+                <span>Clear</span>
               </a>
             </span>
           )}

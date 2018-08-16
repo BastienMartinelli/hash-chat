@@ -25,7 +25,10 @@ class HashtagShare extends React.Component<IProps, IState> {
             className="tag is-primary is-medium is-rounded hashtag"
             onClick={this.showUrl}
           >
-            Share this chanel
+            <span className="icon">
+              <i className="fas fa-share-alt" />
+            </span>
+            <span>Share</span>
           </a>
         )}
         <ShareModale

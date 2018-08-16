@@ -22,11 +22,11 @@ class MessageInput extends React.Component<IProps, IState> {
 
   public render() {
     return (
-      <div className="message-input">
+      <div className="input-container">
         <form onSubmit={this.onSubmit}>
           <input
             onChange={this.onChange}
-            className="input is-rounded"
+            className="input is-rounded message-input"
             type="text"
             placeholder="New Message"
             value={this.state.msg}

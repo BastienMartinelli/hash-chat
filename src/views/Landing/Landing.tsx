@@ -3,6 +3,8 @@ import { observer, inject } from "../../../node_modules/mobx-react";
 import { UserStore } from "../../model/UserStore";
 import { Animated } from "../../../node_modules/react-animated-css";
 import { HashtagStore } from "../../model/HashtagStore";
+import { JoinChanel } from "../../components/JoinChanel";
+import hashLogo from "../../img/hash-logo.png";
 
 interface IProps {
   userStore?: UserStore;
@@ -35,26 +37,15 @@ class Landing extends React.Component<IProps, IState> {
           <div className="hero-body">
             <div className="container has-text-centered">
               <div className="column is-6 is-offset-3">
+                <img width="50px" src={hashLogo} />
                 <h1 className="title">#Hash-Chat</h1>
                 <h2 className="subtitle">
                   A subject oriented public chat application.
                 </h2>
-                {!!this.props.hashtagStore!.hashtags.length && (
-                  <article className="message is-info">
-                    <div className="message-body">
-                      Ready to join{" "}
-                      <strong>
-                        {this.props.hashtagStore!.hashtags.join(" ")}
-                      </strong>
-                      <a
-                        className="button is-info is-fullwidth"
-                        onClick={this.props.hashtagStore!.clearHashtags}
-                      >
-                        No thanks
-                      </a>
-                    </div>
-                  </article>
-                )}
+                <JoinChanel
+                  hashtags={this.props.hashtagStore!.hashtags}
+                  clearHashtags={this.props.hashtagStore!.clearHashtags}
+                />
                 <div className="box">
                   <form onSubmit={this.onSubmit}>
                     <div className="field is-grouped">

@@ -4,14 +4,16 @@ import MessagesContainer from "../../components/MessagesContainer";
 
 import "./ChatRoom.css";
 import HashtagContainer from "../../components/HashtagContainer";
+import MessageInput from "../../components/MessageInput";
 
 export const ChatRoom = () => {
   return (
     <div className="chat-room">
       <Navbar />
-      <div className="chat-container">
+      <div className="container chat-container shadow">
         <HashtagContainer />
         <MessagesContainer />
+        <MessageInput />
       </div>
     </div>
   );
