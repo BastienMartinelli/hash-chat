@@ -4,6 +4,8 @@ import { HashtagStore } from "../model/HashtagStore";
 import { Hashtag } from "./Hashtag";
 import HashtagShare from "./HashtagShare";
 
+const HASHTAG_MAX_LENGTH = 50;
+
 interface IProps {
   hashtagStore?: HashtagStore;
 }
@@ -68,9 +70,9 @@ class HashtagContainer extends React.Component<IProps, IState> {
 
   private addHashtag = (e: any) => {
     e.preventDefault();
-
-    if (/^#\w+$/.test(this.state.input)) {
-      this.props.hashtagStore!.addHashtag(this.state.input);
+    const input: string = this.state.input;
+    if (/^#\w+$/.test(input) && input.length <= HASHTAG_MAX_LENGTH) {
+      this.props.hashtagStore!.addHashtag(input);
       this.setState({
         input: ""
       });
