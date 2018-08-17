@@ -10,9 +10,11 @@ interface IProps {
 @observer
 class HashtagHistory extends React.Component<IProps> {
   public render() {
+    const { history } = this.props.hashtagStore!;
+
     return (
-      this.props.hashtagStore!.history &&
-      !!this.props.hashtagStore!.history.length && (
+      history &&
+      !!history.length && (
         <React.Fragment>
           <div className="navbar-item">
             <span className="icon">
@@ -20,8 +22,8 @@ class HashtagHistory extends React.Component<IProps> {
             </span>
             <span>History :</span>
           </div>
-          {this.props.hashtagStore!.history &&
-            this.props.hashtagStore!.history.map((item: string[]) => (
+          {history &&
+            history.map((item: string[]) => (
               <a className="navbar-item" onClick={this.changeChanel(item)}>
                 <span>{item.join(" ")}</span>
               </a>

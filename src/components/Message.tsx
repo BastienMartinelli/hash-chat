@@ -7,6 +7,7 @@ interface IProps {
   self?: boolean;
   admin: boolean;
   visibility: number;
+  date: string;
 }
 
 export const Message: React.SFC<IProps> = (props: IProps) => {
@@ -23,7 +24,9 @@ export const Message: React.SFC<IProps> = (props: IProps) => {
       isVisible={true}
     >
       <div className="message-content" style={{ opacity: props.visibility }}>
-        <b>{props.author}</b>
+        <span>
+          <b>{props.author} </b> - {props.date}
+        </span>
         <article className={msgColor}>
           <div className="message-body">{props.content}</div>
         </article>

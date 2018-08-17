@@ -23,6 +23,8 @@ class HashtagContainer extends React.Component<IProps, IState> {
   }
 
   public render() {
+    const { hashtags, deleteHashtag, clearHashtags } = this.props.hashtagStore!;
+
     return (
       <div className="hashtag-container shadow">
         <form onSubmit={this.addHashtag}>
@@ -36,18 +38,14 @@ class HashtagContainer extends React.Component<IProps, IState> {
           />
         </form>
         <div className="tag-container">
-          {this.props.hashtagStore!.hashtags.map((tag: string) => (
-            <Hashtag
-              hashtag={tag}
-              delete={this.props.hashtagStore!.deleteHashtag}
-              key={Math.random()}
-            />
+          {hashtags.map((tag: string) => (
+            <Hashtag hashtag={tag} delete={deleteHashtag} key={Math.random()} />
           ))}
-          {!!this.props.hashtagStore!.hashtags.length && (
+          {!!hashtags.length && (
             <span>
               <a
                 className="tag is-primary is-medium is-rounded hashtag"
-                onClick={this.props.hashtagStore!.clearHashtags}
+                onClick={clearHashtags}
               >
                 <span className="icon">
                   <i className="fas fa-eraser" />
@@ -56,7 +54,7 @@ class HashtagContainer extends React.Component<IProps, IState> {
               </a>
             </span>
           )}
-          <HashtagShare hashtags={this.props.hashtagStore!.hashtags} />
+          <HashtagShare hashtags={hashtags} />
         </div>
       </div>
     );

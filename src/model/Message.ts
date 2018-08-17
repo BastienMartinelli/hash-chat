@@ -4,5 +4,5 @@ export interface IMessage {
   content: string;
   hashtags?: string[];
   admin: boolean;
-  createdAt: Date;
+  timestamp: number;
 }

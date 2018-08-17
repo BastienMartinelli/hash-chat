@@ -45,8 +45,8 @@ class MessagesContainer extends React.Component<IProps> {
   /**
    * Calculate the opacity attribute of a message based on his date of creation
    */
-  private getVisibility = (createdAt: any): number => {
-    const time: number = Date.now() - new Date(createdAt).getTime();
+  private getVisibility = (timestamp: any): number => {
+    const time: number = Date.now() - timestamp;
     const hours: number = time / HOUR_IN_MILLI;
     return 1 - hours / VISIBLE_TIME;
   };
@@ -62,12 +62,11 @@ class MessagesContainer extends React.Component<IProps> {
    * Return a list of Messages component to render
    */
   private getMessages() {
+    const { visibleMessages } = this.props.chatStore!;
     return (
-      this.props
-        // filter the old messages
-        .chatStore!.visibleMessages.filter(
-          msg => this.getVisibility(msg.createdAt || Date.now()) > 0
-        )
+      // filter the old messages
+      visibleMessages
+        .filter(msg => this.getVisibility(msg.timestamp || Date.now()) > 0)
         // Generate message component
         .map((msg: IMessage) => {
           return (
@@ -75,9 +74,10 @@ class MessagesContainer extends React.Component<IProps> {
               admin={msg.admin}
               author={msg.author}
               content={msg.content}
+              date={new Date(msg.timestamp).toLocaleTimeString()}
               key={msg.id}
               self={msg.author === this.props.userStore!.userName}
-              visibility={this.getVisibility(msg.createdAt) || 1}
+              visibility={this.getVisibility(msg.timestamp) || 1}
             />
           );
         })

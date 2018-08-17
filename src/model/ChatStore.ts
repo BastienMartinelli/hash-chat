@@ -32,15 +32,15 @@ export class ChatStore {
       admin: false,
       author: userStore.userName,
       content: msg,
-      createdAt: new Date(),
       hashtags: hashtagStore.hashtags,
-      id: ""
+      id: "",
+      timestamp: Date.now()
     };
 
     const id = db
       .ref("messages")
       .child(hashtagStore.hashtagRef)
-      .push().key;
+      .push(message).key;
 
     message.id = id || "unknown";
 
@@ -70,9 +70,9 @@ export class ChatStore {
       admin: true,
       author: "Hash-Chat",
       content: `Now on ${hashtagStore.hashtags.join(" ") || "#general"}`,
-      createdAt: new Date(),
       hashtags: hashtagStore.hashtags,
-      id: Math.random().toString()
+      id: Math.random().toString(),
+      timestamp: Date.now()
     });
   }
 }
