@@ -53,7 +53,7 @@ export class ChatStore {
   }
 
   @action
-  public defineRef() {
+  public async defineRef() {
     // detaching the old listener
     if (this.ref) {
       this.ref.off();
@@ -66,13 +66,12 @@ export class ChatStore {
     this.ref = db.ref("messages/" + hashtagStore.hashtagRef);
 
     // Inform other users that we join the new chanel
-    this.publishAdminMessage(
+    await this.publishAdminMessage(
       `${userStore.userName} joined ${hashtagStore.chanel}`
-    ).then(() => {
-      // then listen for new messages
-      this.ref.on("child_added", (data: any) => {
-        this.messages.push(data.val());
-      });
+    );
+
+    this.ref.on("child_added", (data: any) => {
+      this.messages.push(data.val());
     });
   }
 
