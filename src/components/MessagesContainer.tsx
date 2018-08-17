@@ -19,6 +19,7 @@ class MessagesContainer extends React.Component<IProps> {
   private messagesEnd: any;
 
   public componentDidMount() {
+    this.props.chatStore!.defineRef();
     this.scrollToBottom();
   }
 

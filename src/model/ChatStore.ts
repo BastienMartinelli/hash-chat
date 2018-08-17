@@ -6,15 +6,14 @@ import { db } from "../utils/firebase";
 import hashtagStore from "./HashtagStore";
 import userStore from "./UserStore";
 
+const ADMIN = "#Hash-Chat";
+
 export class ChatStore {
   @observable
   public messages: IMessage[] = [];
 
+  @observable
   private ref: any;
-
-  constructor() {
-    this.defineRef();
-  }
 
   @computed
   get visibleMessages(): IMessage[] {
@@ -37,16 +36,20 @@ export class ChatStore {
       timestamp: Date.now()
     };
 
-    const id = db
-      .ref("messages")
-      .child(hashtagStore.hashtagRef)
-      .push(message).key;
+    return this.pushMessage(message);
+  }
 
-    message.id = id || "unknown";
-
-    return this.ref.update({
-      [id + ""]: message
-    });
+  @action
+  public publishAdminMessage(msg: string) {
+    const message: IMessage = {
+      admin: true,
+      author: ADMIN,
+      content: msg,
+      hashtags: hashtagStore.hashtags,
+      id: "",
+      timestamp: Date.now()
+    };
+    return this.pushMessage(message);
   }
 
   @action
@@ -59,20 +62,30 @@ export class ChatStore {
     // cleaning messages
     this.messages = [];
 
-    // Defining a new listener
+    // Defining a new ref
     this.ref = db.ref("messages/" + hashtagStore.hashtagRef);
-    this.ref.on("child_added", (data: any) => {
-      this.messages.push(data.val());
-    });
 
-    // publishing an informative message to the user
-    this.messages.push({
-      admin: true,
-      author: "Hash-Chat",
-      content: `Now on ${hashtagStore.hashtags.join(" ") || "#general"}`,
-      hashtags: hashtagStore.hashtags,
-      id: Math.random().toString(),
-      timestamp: Date.now()
+    // Inform other users that we join the new chanel
+    this.publishAdminMessage(
+      `${userStore.userName} joined ${hashtagStore.chanel}`
+    ).then(() => {
+      // then listen for new messages
+      this.ref.on("child_added", (data: any) => {
+        this.messages.push(data.val());
+      });
+    });
+  }
+
+  private pushMessage(message: IMessage) {
+    const id = db
+      .ref("messages")
+      .child(hashtagStore.hashtagRef)
+      .push(message).key;
+
+    message.id = id || "unknown";
+
+    return this.ref.update({
+      [id + ""]: message
     });
   }
 }

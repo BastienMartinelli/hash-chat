@@ -32,6 +32,11 @@ export class HashtagStore {
     );
   }
 
+  @computed
+  get chanel(): string {
+    return this.hashtags.join(" ") || "#General";
+  }
+
   @action
   public addHashtag(hashtag: string) {
     this.historize();
