@@ -25,7 +25,9 @@ class Navbar extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const menu = this.state.showMenu ? "navbar-menu is-active" : "navbar-menu";
+    const menu = this.state.showMenu
+      ? "navbar-menu is-active"
+      : "navbar-menu fadeIn";
     return (
       <nav
         className="navbar is-primary"
@@ -73,7 +75,7 @@ class Navbar extends React.Component<IProps, IState> {
                     <span>Change username</span>
                   </a>
                   <hr className="dropdown-divider" />
-                  <HashtagHistory />
+                  <HashtagHistory onClick={this.onShowMenu} />
                 </div>
               </div>
             </div>
@@ -83,7 +85,7 @@ class Navbar extends React.Component<IProps, IState> {
     );
   }
 
-  private onShowMenu = () => {
+  public onShowMenu = () => {
     this.setState(prev => ({
       showMenu: !prev.showMenu
     }));

@@ -4,6 +4,7 @@ import { observer, inject } from "../../node_modules/mobx-react";
 
 interface IProps {
   hashtagStore?: HashtagStore;
+  onClick: () => void;
 }
 
 @inject("hashtagStore")
@@ -34,6 +35,7 @@ class HashtagHistory extends React.Component<IProps> {
   }
 
   private changeChanel = (chanel: string[]) => () => {
+    this.props.onClick();
     this.props.hashtagStore!.changeChanel(chanel);
   };
 }
