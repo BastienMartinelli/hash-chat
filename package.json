@@ -11,6 +11,7 @@
     "react": "^16.4.2",
     "react-animated-css": "^1.0.4",
     "react-dom": "^16.4.2",
+    "react-firebaseui": "^3.0.6",
     "react-scripts-ts": "2.17.0"
   },
   "scripts": {

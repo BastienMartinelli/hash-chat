@@ -92,7 +92,7 @@ class Navbar extends React.Component<IProps, IState> {
   };
 
   private exit = () => {
-    this.props.userStore!.userName = "";
+    this.props.userStore!.signOut();
   };
 }
 

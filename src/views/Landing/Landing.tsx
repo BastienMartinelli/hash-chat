@@ -4,6 +4,7 @@ import { UserStore } from "../../model/UserStore";
 import { Animated } from "../../../node_modules/react-animated-css";
 import { HashtagStore } from "../../model/HashtagStore";
 import { JoinChanel } from "../../components/JoinChanel";
+import { Auth } from "../../components/Auth";
 import hashLogo from "../../img/hash-logo.png";
 
 interface IProps {
@@ -18,13 +19,6 @@ interface IState {
 @inject("userStore", "hashtagStore")
 @observer
 class Landing extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
-    this.state = {
-      userName: ""
-    };
-  }
-
   public render() {
     return (
       <Animated
@@ -42,29 +36,13 @@ class Landing extends React.Component<IProps, IState> {
                 <h2 className="subtitle">
                   A subject oriented public chat application.
                 </h2>
-                <JoinChanel
-                  hashtags={this.props.hashtagStore!.hashtags}
-                  clearHashtags={this.props.hashtagStore!.clearHashtags}
-                />
                 <div className="box">
-                  <form onSubmit={this.onSubmit}>
-                    <div className="field is-grouped">
-                      <p className="control is-expanded">
-                        <input
-                          className="input"
-                          type="text"
-                          placeholder="Choose a username"
-                          value={this.state.userName}
-                          onChange={this.onChange}
-                        />
-                      </p>
-                      <p className="control">
-                        <button className="button is-info" type="submit">
-                          Start To Chat
-                        </button>
-                      </p>
-                    </div>
-                  </form>
+                  <span>Please sign in to start chatting:</span>
+                  <JoinChanel
+                    hashtags={this.props.hashtagStore!.hashtags}
+                    clearHashtags={this.props.hashtagStore!.clearHashtags}
+                  />
+                  <Auth onAuthSuccessfull={this.onAuth} />
                 </div>
               </div>
             </div>
@@ -74,17 +52,8 @@ class Landing extends React.Component<IProps, IState> {
     );
   }
 
-  private onChange = (e: any) => {
-    this.setState({
-      userName: e.target.value
-    });
-  };
-
-  private onSubmit = (e: any) => {
-    e.preventDefault();
-    if (this.state.userName.trim()) {
-      this.props.userStore!.userName = this.state.userName;
-    }
+  private onAuth = (data: any) => {
+    this.props.userStore!.userName = data.user.displayName || data.user.email;
   };
 }
 
